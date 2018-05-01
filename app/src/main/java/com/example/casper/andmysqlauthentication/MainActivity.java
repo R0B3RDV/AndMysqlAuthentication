@@ -33,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private Button btnRegister;
     private Button btnLinkToLogin;
+    private EditText inputNumber;
+    private EditText inputProvince;
+    private EditText inputDistrict;
     private EditText inputFullName;
     private EditText inputEmail;
     private EditText inputPassword;
@@ -46,6 +49,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         inputFullName = (EditText) findViewById(R.id.name);
+        inputNumber = (EditText) findViewById(R.id.number);
+        inputProvince = (EditText) findViewById(R.id.province);
+        inputDistrict = (EditText) findViewById(R.id.district);
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         btnRegister = (Button) findViewById(R.id.btnRegister);
@@ -74,11 +80,14 @@ public class MainActivity extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 String name = inputFullName.getText().toString().trim();
+                String number = inputNumber.getText().toString().trim();
+                String province = inputProvince.getText().toString().trim();
+                String district = inputDistrict.getText().toString().trim();
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
+                if (!name.isEmpty() && !number.isEmpty() && !province.isEmpty() && !district.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+                    registerUser(name, number, province, district, email, password);
                 } else {
                     Toast.makeText(getApplicationContext(),
                             "Lütfen tüm alanları doldurunuz!", Toast.LENGTH_LONG)
@@ -100,8 +109,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void registerUser(final String name, final String email,
-                              final String password) {
+    private void registerUser(final String name,final String number,final String province,final String district,
+                              final String email,final String password) {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
@@ -126,12 +135,15 @@ public class MainActivity extends AppCompatActivity {
 
                         JSONObject user = jObj.getJSONObject("user");
                         String name = user.getString("name");
+                        String number = user.getString("number");
+                        String province = user.getString("province");
+                        String district = user.getString("district");
                         String email = user.getString("email");
                         String created_at = user
                                 .getString("created_at");
 
                         // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
+                        db.addUser(name, number, province, district, email, uid, created_at);
 
                         Toast.makeText(getApplicationContext(), "Kullanıcı kaydı başarılı. Şimdi giriş yapabilirsiniz!", Toast.LENGTH_LONG).show();
 
@@ -170,6 +182,9 @@ public class MainActivity extends AppCompatActivity {
                 // Posting params to register url
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("name", name);
+                params.put("number", number);
+                params.put("province", province);
+                params.put("district", district);
                 params.put("email", email);
                 params.put("password", password);
 

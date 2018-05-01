@@ -12,6 +12,10 @@ import android.widget.TextView;
 
 public class ProfileActivity extends AppCompatActivity {
     private TextView txtName;
+    private TextView txtNumber;
+    private TextView txtProvince;
+    private TextView txtDistrict;
+    private TextView txtCreated;
     private TextView txtEmail;
     private Button btnLogout;
 
@@ -23,6 +27,10 @@ public class ProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
         txtName = (TextView) findViewById(R.id.name);
+        txtNumber = (TextView) findViewById(R.id.number);
+        txtProvince = (TextView) findViewById(R.id.province);
+        txtDistrict = (TextView) findViewById(R.id.district);
+        txtCreated = (TextView) findViewById(R.id.created);
         txtEmail = (TextView) findViewById(R.id.email);
         btnLogout = (Button) findViewById(R.id.btnLogout);
 
@@ -40,10 +48,18 @@ public class ProfileActivity extends AppCompatActivity {
         HashMap<String, String> user = db.getUserDetails();
 
         String name = user.get("name");
+        String number = user.get("number");
+        String province = user.get("province");
+        String district = user.get("district");
+        String created_at = user.get("created_at");
         String email = user.get("email");
 
         // Displaying the user details on the screen
         txtName.setText(name);
+        txtNumber.setText(number);
+        txtProvince.setText(province);
+        txtDistrict.setText(district);
+        txtCreated.setText(created_at);
         txtEmail.setText(email);
 
         // Logout button click event

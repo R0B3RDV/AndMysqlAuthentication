@@ -21,16 +21,24 @@ class DB_Functions {
      * Storing new user
      * returns user details
      */
-    public function storeUser($name, $email, $password) {
+    public function storeUser($name,$number,$province,$district, $email, $password) {
         $uuid = uniqid('', true);
         $hash = $this->hashSSHA($password);
         $encrypted_password = $hash["encrypted"]; // encrypted password
         $salt = $hash["salt"]; // salt
- 
-        $stmt = $this->conn->prepare("INSERT INTO tbl_user(unique_id, name, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, NOW())");
-        $stmt->bind_param("sssss", $uuid, $name, $email, $encrypted_password, $salt);
-        $result = $stmt->execute();
-        $stmt->close();
+
+        $sql = "INSERT INTO tbl_user(unique_id,name,number,province,district, email, encrypted_password, salt, created_at) VALUES(?, ?, ?, ?, ?, ?, ?, ?, NOW())";
+        if ($stmt = $this->conn->prepare($sql)) {
+            $stmt->bind_param("ssssssss", $uuid, $name,$number,$province,$district, $email, $encrypted_password, $salt);
+
+            $result = $stmt->execute();
+
+            $stmt->close();
+        }
+        else {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error; // 1054 Unknown column 'foo' in 'field list'
+        }
  
         // check for successful store
         if ($result) {
@@ -72,8 +80,8 @@ class DB_Functions {
             return NULL;
         }
     }
- 
-    /**
+
+     /**
      * Check user is existed or not
      */
     public function isUserExisted($email) {
@@ -82,7 +90,7 @@ class DB_Functions {
             $stmt->bind_param("s", $email);
 
             $stmt->execute();
-            
+
             $stmt->store_result();
         }
         else {

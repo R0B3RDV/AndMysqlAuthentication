@@ -5,6 +5,9 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Şifre</string>
     <string name="hint_name">Ad Soyad</string>
+    <string name="hint_number">Telefon Numarası</string>
+    <string name="hint_province">İl</string>
+    <string name="hint_district">İlçe</string>
     <string name="btn_login">GİRİŞ</string>
     <string name="btn_register">KAYIT</string>
     <string name="btn_link_to_register">Üyeliğiniz yok mu ? Kayıt ol.</string>
@@ -12,5 +15,8 @@
     <string name="welcome">Hoşgeldiniz</string>
     <string name="btn_logout">ÇIKIŞ</string>
     <string name="name">Ad Soyad</string>
+    <string name="number">Telefon Numarası</string>
+    <string name="province">İl</string>
+    <string name="district">İlçe</string>
 
 </resources>
