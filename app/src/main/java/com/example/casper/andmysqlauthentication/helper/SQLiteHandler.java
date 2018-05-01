@@ -101,7 +101,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         db.delete(TABLE_USER, null, null);
         db.close();
 
-        Log.d(TAG, "Tüm kullanıcı bilgleri silindi");
+        Log.d(TAG, "Tüm kullanıcı bilgileri silindi");
     }
 
 }
