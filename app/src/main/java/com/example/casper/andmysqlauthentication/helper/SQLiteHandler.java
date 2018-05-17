@@ -16,7 +16,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "and_auth";
@@ -33,6 +33,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_UID = "uid";
     private static final String KEY_CREATED_AT = "created_at";
+    private static final String KEY_IMAGE = "image";
 
     public SQLiteHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -45,7 +46,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
                 + KEY_ID + " INTEGER PRIMARY KEY," + KEY_NAME + " TEXT,"
                 + KEY_NUMBER + " TEXT," + KEY_PROVINCE + " TEXT," + KEY_DISTRICT + " TEXT,"
                 + KEY_EMAIL + " TEXT UNIQUE," + KEY_UID + " TEXT,"
-                + KEY_CREATED_AT + " TEXT" + ")";
+                + KEY_CREATED_AT + " TEXT," + KEY_IMAGE + " TEXT" + ")";
         db.execSQL(CREATE_LOGIN_TABLE);
 
         Log.d(TAG, "Veritabanı tabloları oluşturuldu");
@@ -61,7 +62,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public void addUser(String name,String number,String province,String district, String email, String uid, String created_at) {
+    public void addUser(String name,String number,String province,String district, String email, String uid, String created_at, String image) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -72,12 +73,27 @@ public class SQLiteHandler extends SQLiteOpenHelper {
         values.put(KEY_EMAIL, email); // Email
         values.put(KEY_UID, uid); // Uid
         values.put(KEY_CREATED_AT, created_at); // Created At
+        values.put(KEY_IMAGE, image); // Image
 
         // Inserting Row
         long id = db.insert(TABLE_USER, null, values);
         db.close(); // Closing database connection
 
         Log.d(TAG, "Yeni kullanıcı kaydı Sqlite: " + id);
+    }
+
+    public void updateUserImage(String image,String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_IMAGE, image); // Image
+
+        // Inserting Row
+        long id = db.update(TABLE_USER, values,KEY_EMAIL + "=\'"
+                        + email+"\'",null );
+        db.close(); // Closing database connection
+
+        Log.d(TAG, "Kullanıcı resmi güncellendi Sqlite: " + id);
     }
 
     public HashMap<String, String> getUserDetails() {
@@ -96,6 +112,7 @@ public class SQLiteHandler extends SQLiteOpenHelper {
             user.put("email", cursor.getString(5));
             user.put("uid", cursor.getString(6));
             user.put("created_at", cursor.getString(7));
+            user.put("image", cursor.getString(8));
         }
         cursor.close();
         db.close();

@@ -82,6 +82,7 @@ public class ProfileActivity extends AppCompatActivity {
         String district = user.get("district");
         String created_at = user.get("created_at");
         email = user.get("email");
+        String image = user.get("image"); // THIS SET
 
         // Displaying the user details on the screen
         txtName.setText(name);
@@ -118,7 +119,7 @@ public class ProfileActivity extends AppCompatActivity {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
                 //displaying selected image to profile photo
                 pp.setImageBitmap(bitmap);
-
+                
                 //calling the method upload image
                 uploadimage(bitmap);
             } catch (IOException e) {
@@ -184,6 +185,7 @@ public class ProfileActivity extends AppCompatActivity {
             protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
                 long imagename = System.currentTimeMillis();
+                db.updateUserImage(imagename + ".png",email);
                 params.put("pic", new DataPart(imagename + ".png", getFileDataFromDrawable(bitmap)));
                 return params;
             }

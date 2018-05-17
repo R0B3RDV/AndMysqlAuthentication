@@ -139,11 +139,11 @@ public class MainActivity extends AppCompatActivity {
                         String province = user.getString("province");
                         String district = user.getString("district");
                         String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
+                        String created_at = user.getString("created_at");
+                        String image="NULL";
 
                         // Inserting row in users table
-                        db.addUser(name, number, province, district, email, uid, created_at);
+                        db.addUser(name, number, province, district, email, uid, created_at,image);
 
                         Toast.makeText(getApplicationContext(), "Kullanıcı kaydı başarılı. Şimdi giriş yapabilirsiniz!", Toast.LENGTH_LONG).show();
 

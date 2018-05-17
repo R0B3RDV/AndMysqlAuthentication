@@ -134,11 +134,11 @@ public class LoginActivity extends AppCompatActivity {
                         String province = user.getString("province");
                         String district = user.getString("district");
                         String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
+                        String created_at = user.getString("created_at");
+                        String image = user.getString("image");
 
                         // Inserting row in users table
-                        db.addUser(name,number,province,district, email, uid, created_at);
+                        db.addUser(name,number,province,district, email, uid, created_at,image);
 
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,

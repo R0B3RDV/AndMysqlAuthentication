@@ -23,6 +23,7 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $response["user"]["province"] = $user["province"];
         $response["user"]["district"] = $user["district"];
         $response["user"]["email"] = $user["email"];
+        $response["user"]["image"] = $user["image"];
         $response["user"]["created_at"] = $user["created_at"];
         $response["user"]["updated_at"] = $user["updated_at"];
         echo json_encode($response);
