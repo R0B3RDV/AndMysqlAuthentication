@@ -1,39 +1,31 @@
 package com.example.casper.andmysqlauthentication;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Build;
 import android.provider.MediaStore;
-import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.example.casper.andmysqlauthentication.helper.AppConfig;
 import com.example.casper.andmysqlauthentication.helper.SessionManager;
 import com.example.casper.andmysqlauthentication.helper.SQLiteHandler;
 import com.example.casper.andmysqlauthentication.helper.VolleyMultipartRequest;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
-
 import android.content.Intent;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -91,7 +83,11 @@ public class ProfileActivity extends AppCompatActivity {
         txtDistrict.setText(district);
         txtCreated.setText(created_at);
         txtEmail.setText(email);
-
+        if(image != null && !image .isEmpty() && !image.equals("") && !image.equals("null") && !image.equals("NULL")) {
+            Glide.with(getApplicationContext())
+                    .load(AppConfig.URL_GET_IMAGE + image)
+                    .into(pp);
+        }
         // Logout button click event
         btnLogout.setOnClickListener(new View.OnClickListener() {
 
