@@ -53,6 +53,38 @@ class DB_Functions {
             return false;
         }
     }
+
+    /**
+     * Image Upload
+     */
+    public function ImageUpload($image,$email) {
+        $sql = "UPDATE tbl_user SET image=?,updated_at=NOW() WHERE email=?";
+
+        if($stmt = $this->conn->prepare($sql))
+        {
+        $stmt->bind_param('ss', $image,$email);
+        $result = $stmt->execute();
+        
+        $stmt->close();
+        }
+        else {
+            $error = $this->conn->errno . ' ' . $this->conn->error;
+            echo $error; // 1054 Unknown column 'foo' in 'field list'
+        }
+
+        // check
+        if ($result) {
+            $stmt = $this->conn->prepare("SELECT * FROM tbl_user WHERE email = ?");
+            $stmt->bind_param("s", $email);
+            $stmt->execute();
+            $user = $stmt->get_result()->fetch_assoc();
+            $stmt->close();
+ 
+            return true;
+        } else {
+            return false;
+        }
+    }
  
     /**
      * Get user by email and password
