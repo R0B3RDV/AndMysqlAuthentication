@@ -31,6 +31,7 @@ Clone:
 cd projectfolder
 
 git clone https://github.com/pars11/AndMysqlAuthentication
+
 Open phpmyadmin and create a database with name "andauth" and import the file "andauth.sql" (in the Php/include folder) in that database.
 
 Copy Php folder into your web root directory.
